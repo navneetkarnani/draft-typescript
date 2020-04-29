@@ -1,19 +1,13 @@
-import express, { RequestHandler } from "express";
-import { json } from "body-parser";
+import http, { RequestListener } from "http";
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || "3000";
 
-const requestHandler: RequestHandler = (request, response) => {
+const requestHandler: RequestListener = (request, response) => {
   console.log(request.url);
   response.end("Hello World, I'm Node.js!");
 };
 
-const router = express.Router();
-router.get("/", requestHandler);
-
-const server = express();
-server.use(json());
-server.use(router);
+const server = http.createServer(requestHandler);
 
 server.listen(port, () => {
   console.log(`server is listening on ${port}`);
